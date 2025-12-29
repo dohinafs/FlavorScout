@@ -13,7 +13,9 @@ import time
 from bs4 import BeautifulSoup
 import random
 import os
-
+for proxy_var in ["HTTP_PROXY", "HTTPS_PROXY", "ALL_PROXY", "http_proxy", "https_proxy", "all_proxy"]:
+    os.environ.pop(proxy_var, None)
+    
 GROQ_API_KEY = st.secrets.get("GROQ_API_KEY", "")
 
 if GROQ_API_KEY:
@@ -1131,6 +1133,7 @@ def main():
 if __name__ == "__main__":
 
     main()
+
 
 
 
