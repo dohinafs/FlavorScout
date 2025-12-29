@@ -13,8 +13,12 @@ import time
 from bs4 import BeautifulSoup
 import random
 import os
-os.environ["GROQ_API_KEY"] = st.secrets["GROQ_API_KEY"]
-GROQ_API_KEY = st.secrets["GROQ_API_KEY"]
+
+GROQ_API_KEY = st.secrets.get("GROQ_API_KEY", "")
+
+if GROQ_API_KEY:
+    os.environ["GROQ_API_KEY"] = GROQ_API_KEY
+
 
 # Page config
 st.set_page_config(
@@ -809,10 +813,11 @@ def main():
     st.markdown('<div class="sub-header">AI-Powered Flavor Discovery for HealthKart Brands 🚀</div>', unsafe_allow_html=True)
     
     # Check API key
-    if GROQ_API_KEY == "gsk_your_api_key_here":
-        st.error("⚠️ Please add your Groq API key to line 16 in app.py")
-        st.info("Get a free API key from https://console.groq.com")
-        st.stop()
+    if not GROQ_API_KEY:
+    st.error("⚠️ Groq API key not found.")
+    st.info("Add GROQ_API_KEY in Streamlit secrets.")
+    st.stop()
+
     
     # Sidebar Configuration
     with st.sidebar:
@@ -1126,6 +1131,7 @@ def main():
 if __name__ == "__main__":
 
     main()
+
 
 
 
