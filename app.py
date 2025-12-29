@@ -781,14 +781,13 @@ Return ONLY valid JSON in this exact format:
   }}
 }}"""
 
-        chat_completion = client.chat.completions.create(
+        response = client.responses.create(
             model="llama-3.3-70b-versatile",
-            messages=[{"role": "user", "content": prompt}],
-            temperature=0.7,
+            input=prompt,
             max_tokens=2000
         )
         
-        response_text = chat_completion.choices[0].message.content
+        response_text = response.output_text
         json_match = re.search(r'\{.*\}', response_text, re.DOTALL)
         
         if json_match:
@@ -1134,6 +1133,7 @@ def main():
 if __name__ == "__main__":
 
     main()
+
 
 
 
