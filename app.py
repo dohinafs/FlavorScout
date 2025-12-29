@@ -12,10 +12,8 @@ from groq import Groq
 import time
 from bs4 import BeautifulSoup
 import random
-
-# ============================================
-GROQ_API_KEY = st.secrets["GROQ_API_KEY"]  
-# ============================================
+import os
+os.environ["GROQ_API_KEY"] = st.secrets["GROQ_API_KEY"]
 
 # Page config
 st.set_page_config(
@@ -718,7 +716,7 @@ def generate_sample_analysis():
 def analyze_with_groq(api_key, data_text, brand_context):
     """Use Groq API for analysis"""
     try:
-        client = Groq(api_key=st.secrets["GROQ_API_KEY"])
+        client = Groq()
         
         # Format brand list for prompt
         brand_list = ", ".join(brand_context) if isinstance(brand_context, list) else brand_context
@@ -1127,4 +1125,5 @@ def main():
 if __name__ == "__main__":
 
     main()
+
 
