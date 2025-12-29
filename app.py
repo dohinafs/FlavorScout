@@ -14,6 +14,7 @@ from bs4 import BeautifulSoup
 import random
 import os
 os.environ["GROQ_API_KEY"] = st.secrets["GROQ_API_KEY"]
+GROQ_API_KEY = st.secrets["GROQ_API_KEY"]
 
 # Page config
 st.set_page_config(
@@ -1125,5 +1126,6 @@ def main():
 if __name__ == "__main__":
 
     main()
+
 
 
