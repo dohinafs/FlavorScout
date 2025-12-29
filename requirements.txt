@@ -1,7 +1,9 @@
-streamlit==1.31.0
-pandas==2.1.4
+streamlit>=1.31
+pandas>=2.2.0
+numpy>=1.26
 plotly==5.18.0
 wordcloud==1.9.3
 matplotlib==3.8.2
 groq==0.4.2
+
 requests==2.31.0
