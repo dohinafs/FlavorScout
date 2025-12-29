@@ -718,7 +718,7 @@ def generate_sample_analysis():
 def analyze_with_groq(api_key, data_text, brand_context):
     """Use Groq API for analysis"""
     try:
-        client = Groq(api_key=api_key)
+        client = Groq(api_key=st.secrets["GROQ_API_KEY"])
         
         # Format brand list for prompt
         brand_list = ", ".join(brand_context) if isinstance(brand_context, list) else brand_context
@@ -1127,3 +1127,4 @@ def main():
 if __name__ == "__main__":
 
     main()
+
