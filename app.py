@@ -782,8 +782,8 @@ Return ONLY valid JSON in this exact format:
 }}"""
 
         chat_completion = client.chat.completions.create(
-            messages=[{"role": "user", "content": prompt}],
             model="llama-3.3-70b-versatile",
+            input=prompt,
             temperature=0.7,
             max_tokens=2000
         )
@@ -1134,6 +1134,7 @@ def main():
 if __name__ == "__main__":
 
     main()
+
 
 
 
