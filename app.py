@@ -814,9 +814,9 @@ def main():
     
     # Check API key
     if not GROQ_API_KEY:
-    st.error("⚠️ Groq API key not found.")
-    st.info("Add GROQ_API_KEY in Streamlit secrets.")
-    st.stop()
+        st.error("⚠️ Groq API key not found.")
+        st.info("Add GROQ_API_KEY in Streamlit secrets.")
+        st.stop()
 
     
     # Sidebar Configuration
@@ -1131,6 +1131,7 @@ def main():
 if __name__ == "__main__":
 
     main()
+
 
 
 
