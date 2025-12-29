@@ -16,7 +16,8 @@ import os
 for proxy_var in ["HTTP_PROXY", "HTTPS_PROXY", "ALL_PROXY", "http_proxy", "https_proxy", "all_proxy"]:
     os.environ.pop(proxy_var, None)
     
-GROQ_API_KEY = st.secrets.get("GROQ_API_KEY", "")
+GROQ_API_KEY = st.secrets.get("GROQ", {}).get("GROQ_API_KEY", "")
+
 if GROQ_API_KEY:
     os.environ["GROQ_API_KEY"] = GROQ_API_KEY
 
@@ -722,7 +723,8 @@ def generate_sample_analysis():
 def analyze_with_groq(api_key, data_text, brand_context):
     """Use Groq API for analysis"""
     try:
-        client = Groq(api_key=GROQ_API_KEY)
+        client = Groq(api_key=api_key)
+
         
         # Format brand list for prompt
         brand_list = ", ".join(brand_context) if isinstance(brand_context, list) else brand_context
@@ -781,7 +783,7 @@ Return ONLY valid JSON in this exact format:
 
         chat_completion = client.chat.completions.create(
             messages=[{"role": "user", "content": prompt}],
-            model="llama-3.3-70b-versatile",  # Updated to supported model
+            model="llama-3.3-70b-versatile",
             temperature=0.7,
             max_tokens=2000
         )
@@ -959,11 +961,11 @@ def main():
                         # Replace with first recommendation if golden doesn't match
                         if analysis.get('recommended'):
                             analysis['golden_candidate'] = {
-                                'flavor': analysis['recommended'][1].get('flavor'),
-                                'brand': analysis['recommended'][1].get('brand'),
-                                'product_type': analysis['recommended'][1].get('product_type'),
-                                'why': analysis['recommended'][1].get('why'),
-                                'market_opportunity': f"Strong demand from {analysis['recommended'][1].get('brand')} target audience"
+                                'flavor': analysis['recommended'][0].get('flavor'),
+                                'brand': analysis['recommended'][0].get('brand'),
+                                'product_type': analysis['recommended'][0].get('product_type'),
+                                'why': analysis['recommended'][0].get('why'),
+                                'market_opportunity': f"Strong demand from {analysis['recommended'][0].get('brand')} target audience"
                             }
                 
                 st.session_state.analysis = analysis
@@ -1132,6 +1134,7 @@ def main():
 if __name__ == "__main__":
 
     main()
+
 
 
 
