@@ -16,10 +16,11 @@ import os
 for proxy_var in ["HTTP_PROXY", "HTTPS_PROXY", "ALL_PROXY", "http_proxy", "https_proxy", "all_proxy"]:
     os.environ.pop(proxy_var, None)
     
-GROQ_API_KEY = st.secrets.get("GROQ_API_KEY", "")
+GROQ_API_KEY = st.secrets.get("GROQ", {}).get("GROQ_API_KEY", "")
+if not GROQ_API_KEY:
+    st.error("⚠️ GROQ_API_KEY not found in Streamlit secrets.")
+os.environ["GROQ_API_KEY"] = GROQ_API_KEY
 
-if GROQ_API_KEY:
-    os.environ["GROQ_API_KEY"] = GROQ_API_KEY
 
 
 # Page config
@@ -723,7 +724,7 @@ def generate_sample_analysis():
 def analyze_with_groq(api_key, data_text, brand_context):
     """Use Groq API for analysis"""
     try:
-        client = Groq()
+        client = Groq(api_key=GROQ_API_KEY)
         
         # Format brand list for prompt
         brand_list = ", ".join(brand_context) if isinstance(brand_context, list) else brand_context
@@ -1133,6 +1134,7 @@ def main():
 if __name__ == "__main__":
 
     main()
+
 
 
 
